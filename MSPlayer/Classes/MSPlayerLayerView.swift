@@ -110,10 +110,13 @@ open class MSPlayerLayerView: UIView {
         guard let player = player else { return }
         player.addObserver(self, forKeyPath: "rate", options: .new, context: nil)
         
+        player.currentItem?.audioTimePitchAlgorithm = .spectral
+        
         playerLayer?.removeFromSuperlayer()
         playerLayer = AVPlayerLayer(player: player)
         playerLayer?.videoGravity = convertToAVLayerVideoGravity(videoGravity)
         if let playerLayer = playerLayer {
+            
             layer.addSublayer(playerLayer)
             layer.opacity = 0.0
             UIView.animate(withDuration: 1.0) { [weak layer] in
@@ -316,11 +319,7 @@ open class MSPlayerLayerView: UIView {
     // MARK: - 設定計時器
     func setupTimer() {
         timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 0.5,
-                                     target: self,
-                                     selector: #selector(playerTimerAction),
-                                     userInfo: nil,
-                                     repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(playerTimerAction), userInfo: nil, repeats: true)
         timer?.fireDate = Date()
     }
     

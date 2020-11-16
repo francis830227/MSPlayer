@@ -25,13 +25,11 @@ public class MSPM {
     
     @discardableResult
     public static func shared() -> MSPM {
-        if let shared = self.sharedInstance {
-            return shared
+        if let sharedInstance = self.sharedInstance {
+            return sharedInstance
         } else {
             let shared = MSPM()
             self.sharedInstance = shared
-//            let _ = BrightnessView.shared()
-//            let _ = SystemSettingManager.shared
             return shared
         }
     }
@@ -166,10 +164,6 @@ public class MSPM {
     open var seekToViewCornerRadius = 4 * MSPM.screenRatio
     open var seekToViewImage: UIImage? = MSPM.MSImageResourcePath("MSPlayer_seekTo_image")
     open var replayButtonImage: UIImage? = MSPM.MSImageResourcePath("MSPlayer_replay_image")
-    open var playNextView: MSPlayNext? = CircleProgressImageView(size: CGSize(width: 50, height: 50),
-                                                                 image: MSPM.MSImageResourcePath("MSPlayer_playCover_image"))
-    open var playNextTopText: String = "play next top text"
-    open var playNextBottomText: String = "play next bot text"
     
     // MSPlayerConfig
     open var playerPanSeekRate: Double = 1.0
@@ -300,7 +294,7 @@ public class MSPM {
     }()
     
     open func removeAllRecords() {
-        let coreDataManager = MSCoreDataManager.shared
+        let coreDataManager = MSCoreDataManager()
         coreDataManager.deleteAllVideoTimeRecords()
     }
 }
